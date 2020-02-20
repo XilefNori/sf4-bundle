@@ -21,6 +21,9 @@
         }
     },
     "autoload-dev": {
+        "files": [
+            "tests/boot.php"
+        ],
         "psr-4": {
             "KnpU\\LoremIpsumBundle\\Tests\\": "tests"
         }

@@ -13,8 +13,6 @@ class KnpULoremIpsumBundle extends Bundle
             $this->extension = new KnpULoremIpsumExtension;
         }
 
-        if ($this->extension) {
-            return $this->extension;
-        }
+        return $this->extension;
     }
 }

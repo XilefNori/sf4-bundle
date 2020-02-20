@@ -165,7 +165,6 @@ class KnpUIpsum
             $unicornKey = array_rand($words);
             $words[$unicornKey] = 'unicorn';
 
-
             $wordsString = implode(' ', $words);
         }
 
