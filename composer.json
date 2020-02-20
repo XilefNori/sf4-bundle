@@ -1,0 +1,28 @@
+{
+    "name": "knpuniversity/lorem-ipsum-bundle",
+    "description": "lorem-ipsum-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "sboborykin",
+            "email": "sergey@boborykin.ru"
+        }
+    ],
+    "require": {
+        "php": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "KnpU\\LoremIpsumBundle\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "KnpU\\LoremIpsumBundle\\Tests\\": "tests"
+        }
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^5.0"
+    }
+}

@@ -1,18 +1,6 @@
 /.idea
 /.cache
-
-###> symfony/framework-bundle ###
-.env
-/public/bundles/
-/var/
 /vendor/
-###< symfony/framework-bundle ###
-
-###> symfony/web-server-bundle ###
-.web-server-pid
-###< symfony/web-server-bundle ###
-
-###> symfony/phpunit-bridge ###
-.phpunit
+/composer.lock
 /phpunit.xml
-###< symfony/phpunit-bridge ###
+/.phpunit.result*
