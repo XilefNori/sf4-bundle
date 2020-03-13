@@ -31,19 +31,19 @@ class FunctionalTest extends TestCase
         $this->assertIsString($ipsum->getParagraphs());
     }
 
-    public function testServiceWiringWithConfiguration(): void
-    {
-        $kernel = new KnpULoremIpsumTestingKernel([
-            'word_provider' => 'stub_word_list'
-        ]);
-        $kernel->boot();
-
-        $container = $kernel->getContainer();
-
-        /** @var KnpUIpsum $ipsum */
-        $ipsum = $container->get('knpu_lorem_ipsum.knpu_ipsum');
-        $this->assertStringContainsString('stub', $ipsum->getWords(2));
-    }
+    // public function testServiceWiringWithConfiguration(): void
+    // {
+    //     $kernel = new KnpULoremIpsumTestingKernel([
+    //         'word_provider' => 'stub_word_list'
+    //     ]);
+    //     $kernel->boot();
+    //
+    //     $container = $kernel->getContainer();
+    //
+    //     /** @var KnpUIpsum $ipsum */
+    //     $ipsum = $container->get('knpu_lorem_ipsum.knpu_ipsum');
+    //     $this->assertStringContainsString('stub', $ipsum->getWords(2));
+    // }
 
     public static function tearDownAfterClass(): void
     {

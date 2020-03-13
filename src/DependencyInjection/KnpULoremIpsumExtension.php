@@ -12,6 +12,8 @@ class KnpULoremIpsumExtension extends Extension
 {
     public const ALIAS = 'knpu_lorem_ipsum';
 
+    // ContainerBuilder - is a dummy empty container at the beginning of this method
+    // Symfony then merges it into the REAL one
     public function load(array $configs, ContainerBuilder $container)
     {
         // var_dump($configs); exit;
@@ -23,14 +25,6 @@ class KnpULoremIpsumExtension extends Extension
         $config        = $this->processConfiguration($configuration, $configs);
 
         $definition = $container->getDefinition('knpu_lorem_ipsum.knpu_ipsum');
-
-        if ($config['word_provider']) {
-            // Changing alias in whole container
-            $container->setAlias('knpu_lorem_ipsum.word_provider', $config['word_provider']);
-
-            // Set argument directly by reference name
-            // $definition->setArgument(0, new Reference($config['word_provider']));
-        }
 
         $definition->setArgument(1, $config['unicorns_are_real']);
         $definition->setArgument(2, $config['min_sunshine']);
