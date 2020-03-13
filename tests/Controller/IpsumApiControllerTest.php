@@ -22,7 +22,7 @@ class IpsumApiControllerTest extends TestCase
         $client->request('GET', '/api/');
 
         $response = $client->getResponse();
-        var_dump($response->getContent());
+        // var_dump($response->getContent());
         $this->assertSame(200, $response->getStatusCode());
     }
 }
@@ -51,9 +51,7 @@ class KnpULoremIpsumControllerKernel extends Kernel
 
     protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
     {
-        $c->loadFromExtension('framework', [
-            'secret' => 'xxx'
-        ]);
+        $c->loadFromExtension('framework', ['secret' => 'xxx']);
     }
 
     public function getCacheDir()
