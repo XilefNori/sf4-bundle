@@ -13,19 +13,24 @@ class KnpUIpsum
 
     private $minSunshine;
 
-    private $wordProvider;
+    /** @var WordProviderInterface[] */
+    private $wordProviders;
 
-    public function __construct(WordProviderInterface $knpWordProvider, bool $unicornsAreReal = true, $minSunshine = 3)
+    /** @var string[] */
+    private $wordList;
+
+    public function __construct(array $knpWordProviders, bool $unicornsAreReal = true, $minSunshine = 3)
     {
         $this->unicornsAreReal = $unicornsAreReal;
         $this->minSunshine     = $minSunshine;
-        $this->wordProvider    = $knpWordProvider;
+        $this->wordProviders   = $knpWordProviders;
     }
 
     /**
      * Returns several paragraphs of random ipsum text.
      *
      * @param int $count
+     *
      * @return string
      */
     public function getParagraphs(int $count = 3): string
@@ -40,13 +45,13 @@ class KnpUIpsum
 
     public function getSentences(int $count = 1): string
     {
-        $count = $count < 1 ? 1 : $count;
+        $count     = $count < 1 ? 1 : $count;
         $sentences = array();
 
         for ($i = 0; $i < $count; $i++) {
             $wordCount = $this->gauss(16, 5.08);
             // avoid very short sentences
-            $wordCount  = $wordCount < 4 ? 4 : $wordCount;
+            $wordCount   = $wordCount < 4 ? 4 : $wordCount;
             $sentences[] = $this->getWords($wordCount, true);
         }
 
@@ -61,17 +66,19 @@ class KnpUIpsum
      * Generates words of lorem ipsum.
      *
      * @access public
-     * @param  integer $count how many words to generate
-     * @param  boolean $asArray whether an array or a string should be returned
+     *
+     * @param integer $count   how many words to generate
+     * @param boolean $asArray whether an array or a string should be returned
+     *
      * @return mixed   string or array of generated lorem ipsum words
      */
     public function getWords(int $count = 1, bool $asArray = false)
     {
         $count = $count < 1 ? 1 : $count;
 
-        $words = array();
+        $words     = array();
         $wordCount = 0;
-        $wordList = $this->getWordList();
+        $wordList  = $this->getWordList();
 
         // Shuffles and appends the word list to compensate for count
         // arguments that exceed the size of our vocabulary list
@@ -83,9 +90,9 @@ class KnpUIpsum
                 // Checks that the last word of the list and the first word of
                 // the list that's about to be appended are not the same
                 if (!$wordCount || $words[$wordCount - 1] != $wordList[0]) {
-                    $words = array_merge($words, $wordList);
+                    $words     = array_merge($words, $wordList);
                     $wordCount = count($words);
-                    $shuffle = false;
+                    $shuffle   = false;
                 }
             }
         }
@@ -108,8 +115,9 @@ class KnpUIpsum
      * number of words in a sentence, the number of sentences in a paragraph
      * and the distribution of commas in a sentence.
      *
-     * @param  float $mean average value
-     * @param  float $std_dev standard deviation
+     * @param float $mean    average value
+     * @param float $std_dev standard deviation
+     *
      * @return float  calculated distribution
      */
     private function gauss(float $mean, float $std_dev): float
@@ -134,9 +142,9 @@ class KnpUIpsum
             $words = count($sentence);
             // Only worry about commas on sentences longer than 4 words
             if ($words > 4) {
-                $mean = log($words, 6);
+                $mean    = log($words, 6);
                 $std_dev = $mean / 6;
-                $commas = round($this->gauss($mean, $std_dev));
+                $commas  = round($this->gauss($mean, $std_dev));
                 for ($i = 1; $i <= $commas; $i++) {
                     $word = round($i * $words / ($commas + 1));
                     if ($word < ($words - 1) && $word > 0) {
@@ -155,14 +163,15 @@ class KnpUIpsum
      * person using this class is a grouch and turned that setting off! Boo to you!
      *
      * @param string $wordsString
+     *
      * @return string
      */
     private function addJoy(string $wordsString): string
     {
         $unicornKey = null;
         if ($this->unicornsAreReal && false === stripos($wordsString, 'unicorn')) {
-            $words = explode(' ', $wordsString);
-            $unicornKey = array_rand($words);
+            $words              = explode(' ', $wordsString);
+            $unicornKey         = array_rand($words);
             $words[$unicornKey] = 'unicorn';
 
             $wordsString = implode(' ', $words);
@@ -204,6 +213,20 @@ class KnpUIpsum
 
     private function getWordList(): array
     {
-        return $this->wordProvider->getWordList();
+        if (!$this->wordList) {
+            $words = [];
+            foreach ($this->wordProviders as $provider) {
+                /** @noinspection SlowArrayOperationsInLoopInspection */
+                $words = array_merge($words, $provider->getWordList());
+            }
+
+            if(count($words) <= 1) {
+                throw new \Exception('Word list musc contain at least 2 words!');
+            }
+
+            $this->wordList = $words;
+        }
+
+        return $this->wordList;
     }
 }
