@@ -9,7 +9,7 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('knpu_lorem_ipsum');
+        $treeBuilder = new TreeBuilder(KnpULoremIpsumExtension::ALIAS);
         $rootNode = $treeBuilder->getRootNode();
 
         $rootNode

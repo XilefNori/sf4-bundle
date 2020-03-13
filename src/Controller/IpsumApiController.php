@@ -12,7 +12,6 @@ class IpsumApiController extends AbstractController
 
     public function __construct(KnpUIpsum $knpUIpsum)
     {
-
         $this->knpUIpsum = $knpUIpsum;
     }
 

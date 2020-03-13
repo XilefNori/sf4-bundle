@@ -10,6 +10,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class KnpULoremIpsumExtension extends Extension
 {
+    public const ALIAS = 'knpu_lorem_ipsum';
+
     public function load(array $configs, ContainerBuilder $container)
     {
         // var_dump($configs); exit;
@@ -38,6 +40,6 @@ class KnpULoremIpsumExtension extends Extension
 
     public function getAlias()
     {
-        return 'knpu_lorem_ipsum';
+        return self::ALIAS;
     }
 }
