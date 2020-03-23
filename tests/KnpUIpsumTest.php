@@ -13,7 +13,7 @@ class KnpUIpsumTest extends TestCase
 {
     public function testGetWords()
     {
-        $ipsum = new KnpUIpsum(new KnpUWordProvider());
+        $ipsum = new KnpUIpsum([new KnpUWordProvider()]);
 
         $words = $ipsum->getWords(1);
         $this->assertIsString($words);
@@ -28,7 +28,7 @@ class KnpUIpsumTest extends TestCase
 
     public function testGetSentences()
     {
-        $ipsum = new KnpUIpsum(new KnpUWordProvider());
+        $ipsum = new KnpUIpsum([new KnpUWordProvider()]);
 
         $text = $ipsum->getSentences(3);
         $this->assertEquals(3, substr_count($text, '.'));
@@ -45,7 +45,7 @@ class KnpUIpsumTest extends TestCase
         // weird: using a loop because the results are random, and so
         // they may pass several times by luck
         for ($i = 0; $i < 100; $i++) {
-            $ipsum = new KnpUIpsum(new KnpUWordProvider());
+            $ipsum = new KnpUIpsum([new KnpUWordProvider()]);
             $text = $ipsum->getParagraphs(3);
             $paragraphs = explode("\n\n", $text);
             $this->assertCount(3, $paragraphs);

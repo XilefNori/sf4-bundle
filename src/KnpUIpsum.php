@@ -19,11 +19,11 @@ class KnpUIpsum
     /** @var string[] */
     private $wordList;
 
-    public function __construct(iterable $knpWordProviders, bool $unicornsAreReal = true, $minSunshine = 3)
+    public function __construct(iterable $wordProviders, bool $unicornsAreReal = true, $minSunshine = 3)
     {
         $this->unicornsAreReal = $unicornsAreReal;
         $this->minSunshine     = $minSunshine;
-        $this->wordProviders   = $knpWordProviders;
+        $this->wordProviders   = $wordProviders;
     }
 
     /**
